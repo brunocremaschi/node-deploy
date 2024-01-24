@@ -30,6 +30,22 @@ app.post("/users", async (request, reply) => {
   return reply.status(201).send();
 });
 
+app.delete("/users/:id", async (request, reply) => {
+  const deleteUserSchema = z.object({
+    id: z.string(),
+  });
+
+  const {id} = request.params;
+
+  await prisma.user.delete({
+    where: {
+      id: id,
+    }
+  });
+
+  return reply.status(204).send();
+});
+
 app.listen({
   host: "0.0.0.0",
   port: process.env.PORT ? Number(process.env.PORT) : 33333,
