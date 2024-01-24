@@ -35,7 +35,7 @@ app.delete("/users/:id", async (request, reply) => {
     id: z.string(),
   });
 
-  const {id} = request.params;
+  const {id} = deleteUserSchema.parse(request.params);
 
   await prisma.user.delete({
     where: {
